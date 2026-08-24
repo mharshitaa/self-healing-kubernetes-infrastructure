@@ -117,7 +117,9 @@ Argo CD manages the Kubernetes deployment using a GitOps workflow:
 
 ```text
 GitHub → Argo CD → Kubernetes → Flask Application
+
 ```
+![Argo CD](argo-cd.png)
 
 ## 📊 Results
 
