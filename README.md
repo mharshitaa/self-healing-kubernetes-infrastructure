@@ -10,7 +10,7 @@ A pod failure is intentionally simulated using chaos engineering. Kubernetes aut
 
 ## 🏗️ Architecture
 
-![Architecture Diagram](Screenshots/Architecture-diagram.jpeg)
+![Architecture Diagram](Architecture-diagram.jpeg)
 
 ## 🛠️ Tech Stack
 
@@ -71,7 +71,7 @@ kubectl get deployment -n self-healing
 
 The application runs with **3/3 replicas available**.
 
-![Deployment](Screenshots/Deployment.png)
+![Deployment](Deployment.png)
 
 ## 💥 Chaos Engineering
 
@@ -83,7 +83,7 @@ kubectl delete pod <pod-name> -n self-healing
 
 Kubernetes automatically created a replacement pod.
 
-![Chaos Engineering](Screenshots/Chaos-pod-delete.png)
+![Chaos Engineering](Chaos-pod-delete.png)
 
 ## 🔄 Self-Healing
 
@@ -103,13 +103,13 @@ Replacement Pod Created
 
 This demonstrates Kubernetes' automatic self-healing and desired-state management.
 
-![Pods After Recovery](Screenshots/Pods-running.png)
+![Pods After Recovery](Pods-running.png)
 
 ## ❤️ Application Health
 
 After recovery, the Flask application remained healthy and accessible.
 
-![Application Healthy](Screenshots/App-healthy.png)
+![Application Healthy](App-healthy.png)
 
 ## 🔁 GitOps with Argo CD
 
