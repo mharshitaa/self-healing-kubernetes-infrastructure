@@ -10,7 +10,7 @@ Pod and container failures are intentionally simulated. Kubernetes automatically
 
 ## 🏗️ Architecture
 
-![Architecture Diagram](architecture-diagram.jpeg)
+![Architecture Diagram](Architecture-diagram.jpeg)
 
 ## 🛠️ Tech Stack
 
