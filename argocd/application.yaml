@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: self-healing
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/mharshitaa/resilient-kubernetes-self-healing.git
+    targetRevision: HEAD
+    path: kubernetes/base
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: self-healing
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
