@@ -1,12 +1,12 @@
-# Resilient Kubernetes Infrastructure with Self-Healing
+# Design and Implementation of a Self-Healing Kubernetes Infrastructure for Fault Recovery Using K3s and Argo CD
 
-A DevOps project demonstrating **Kubernetes deployment, fault recovery, chaos engineering, and self-healing** using Docker, Kubernetes, Minikube, and Argo CD.
+A DevOps project demonstrating **Kubernetes deployment, fault recovery, chaos engineering, monitoring, and self-healing** using Docker, K3s, AWS EC2, and Argo CD.
 
 ## 📌 Overview
 
-A Flask application is containerized using Docker and deployed on Kubernetes with **3 replicas**.
+A Flask application is containerized using Docker and deployed on a **K3s Kubernetes cluster running on AWS EC2** with **3 replicas**.
 
-A pod failure is intentionally simulated using chaos engineering. Kubernetes automatically detects the failure, creates a replacement pod, and maintains the desired application state.
+Pod and container failures are intentionally simulated. Kubernetes automatically detects failures, restarts failed containers, creates replacement pods, and maintains the desired application state.
 
 ## 🏗️ Architecture
 
@@ -15,63 +15,68 @@ A pod failure is intentionally simulated using chaos engineering. Kubernetes aut
 ## 🛠️ Tech Stack
 
 * **Docker** – Containerization
-* **Kubernetes** – Container orchestration & self-healing
-* **Minikube** – Local Kubernetes cluster
+* **K3s Kubernetes** – Container orchestration & self-healing
+* **AWS EC2** – Cloud infrastructure
 * **Flask** – Application
 * **kubectl** – Cluster management
 * **Argo CD** – GitOps deployment
 * **GitHub** – Source control
+* **Liveness & Readiness Probes** – Application health checks
+* **Metrics Server** – Resource monitoring
+* **Chaos Engineering** – Failure simulation
 
 ## 📂 Project Structure
 
 ```text
-self-healing-infrastructure/
+resilient-kubernetes-self-healing/
+
 ├── app/
-│   ├── app.py
-│   └── requirements.txt
 ├── argocd/
-│   └── application.yaml
 ├── docker/
-│   └── Dockerfile
 ├── infra/
-│   └── kind-config.yaml
 ├── kubernetes/
-│   └── base/
-│       ├── deployment.yaml
-│       ├── namespace.yaml
-│       └── service.yaml
-├── Screenshots/
-│   ├── App-healthy.png
-│   ├── Architecture-diagram.jpeg
-│   ├── Chaos-pod-delete.png
-│   ├── Deployment.png
-│   └── Pods-running.png
+├── App-healthy.png
+├── Architecture-diagram.jpeg
+├── Argo CD GitOps Self-Healing.png
+├── argo-cd.png
+├── Chaos-pod-delete.png
+├── Deployment.png
+├── Kubernetes Resource Monitoring using Metrics Server1.png
+├── Kubernetes-Monitoring-and-Health-Check.png
+├── Liveness-probe-restart.png
+├── Liveness-self-healing.png
+├── Pods-running.png
 └── README.md
-```
+````
 
 ## 🚀 Deployment
 
-Start the Minikube cluster:
+The Flask application is deployed on the K3s cluster running on AWS EC2.
 
 ```bash
-minikube start --driver=docker
-```
-
-Deploy the Kubernetes resources:
-
-```bash
-kubectl apply -f kubernetes/base/ -n self-healing
-```
-
-Check the deployment:
-
-```bash
+kubectl get nodes
 kubectl get deployment -n self-healing
 ```
 
-The application runs with **3/3 replicas available**.
+The deployment maintains **3/3 available replicas**.
 
 ![Deployment](Deployment.png)
+
+## ❤️ Application Health
+
+The Flask application's health endpoint is monitored using Kubernetes health probes.
+
+![Application Healthy](App-healthy.png)
+
+## 🔍 Liveness & Readiness Probes
+
+Liveness and readiness probes monitor application health and availability.
+
+If a container fails the liveness probe, Kubernetes automatically restarts it.
+
+![Liveness Probe Restart](Liveness-probe-restart.png)
+
+![Liveness Self Healing](Liveness-self-healing.png)
 
 ## 💥 Chaos Engineering
 
@@ -92,8 +97,6 @@ Kubernetes automatically created a replacement pod.
       ↓
 Pod Failure
       ↓
-Pod Deleted
-      ↓
 Kubernetes Detects Failure
       ↓
 Replacement Pod Created
@@ -101,25 +104,32 @@ Replacement Pod Created
 3 Running Pods
 ```
 
-This demonstrates Kubernetes' automatic self-healing and desired-state management.
-
 ![Pods After Recovery](Pods-running.png)
 
-## ❤️ Application Health
+## 📊 Resource Monitoring
 
-After recovery, the Flask application remained healthy and accessible.
+Kubernetes Metrics Server was configured for CPU and memory monitoring.
 
-![Application Healthy](App-healthy.png)
+```bash
+kubectl top node
+kubectl top pods -A
+```
+
+![Resource Monitoring](Kubernetes Resource Monitoring using Metrics Server1.png)
+
+![Monitoring and Health Check](Kubernetes-Monitoring-and-Health-Check.png)
 
 ## 🔁 GitOps with Argo CD
 
-Argo CD manages the Kubernetes deployment using a GitOps workflow:
+Argo CD continuously monitors the GitHub repository and synchronizes the desired Kubernetes state.
 
 ```text
-GitHub → Argo CD → Kubernetes → Flask Application
-
+GitHub → Argo CD → K3s Kubernetes → Flask Application
 ```
+
 ![Argo CD](argo-cd.png)
+
+![Argo CD GitOps Self-Healing](Argo CD GitOps Self-Healing.png)
 
 ## 📊 Results
 
@@ -127,20 +137,23 @@ GitHub → Argo CD → Kubernetes → Flask Application
 * ✅ 3 Kubernetes replicas running
 * ✅ Pod failure successfully simulated
 * ✅ Failed pod automatically replaced
+* ✅ Failed container automatically restarted
+* ✅ Liveness and readiness probes configured
 * ✅ Application remained healthy after recovery
 * ✅ Argo CD GitOps deployment configured
-* ✅ Liveness probe detected application failure
-* ✅ Failed container automatically restarted
-* ✅ Kubernetes Metrics Server configured for resource monitoring
+* ✅ Argo CD application synchronized and healthy
+* ✅ Kubernetes Metrics Server configured
+* ✅ CPU and memory usage monitored
 
 ## 🔮 Future Enhancements
 
 * Prometheus & Grafana monitoring
 * GitHub Actions CI/CD
 * Terraform Infrastructure as Code
-* AWS EKS deployment
 * Automated alerts
+* AWS EKS deployment
 
 ## 👩‍💻 Author
 
 **Harshita Manchanda**
+
