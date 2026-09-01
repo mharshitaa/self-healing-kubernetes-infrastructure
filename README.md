@@ -66,8 +66,6 @@ The deployment maintains **3/3 available replicas**.
 
 The Flask application's health endpoint is monitored using Kubernetes health probes.
 
-![Application Healthy](App-healthy.png)
-
 ## 🔍 Liveness & Readiness Probes
 
 Liveness and readiness probes monitor application health and availability.
