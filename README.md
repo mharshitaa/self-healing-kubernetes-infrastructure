@@ -1,4 +1,4 @@
-# Design and Implementation of a Self-Healing Kubernetes Infrastructure for Fault Recovery Using K3s and Argo CD
+# Design of Self-Healing Kubernetes Application Using GitOps-Based Automated Recovery
 
 A DevOps project demonstrating **Kubernetes deployment, fault recovery, chaos engineering, monitoring, and self-healing** using Docker, K3s, AWS EC2, and Argo CD.
 
