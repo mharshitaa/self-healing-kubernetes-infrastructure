@@ -129,6 +129,9 @@ GitHub → Argo CD → Kubernetes → Flask Application
 * ✅ Failed pod automatically replaced
 * ✅ Application remained healthy after recovery
 * ✅ Argo CD GitOps deployment configured
+* ✅ Liveness probe detected application failure
+* ✅ Failed container automatically restarted
+* ✅ Kubernetes Metrics Server configured for resource monitoring
 
 ## 🔮 Future Enhancements
 
